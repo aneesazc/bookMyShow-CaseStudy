@@ -1,3 +1,4 @@
+/*
 # 🎬 Movie Booking Database Design (Simple Solution)
 
 ## P1 – Tables and Structure
@@ -32,7 +33,7 @@
 ## SQL Commands
 
 ### Create Tables
-
+*/
 -- Create Movie Table
 CREATE TABLE Movie (
     movie_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -64,9 +65,9 @@ CREATE TABLE Show (
     FOREIGN KEY (movie_id) REFERENCES Movie(movie_id)
 );
 
-
+/*
 ### Insert Sample Data
-
+*/
 -- Insert Movies
 INSERT INTO Movie (title, language, format, rating, duration) VALUES
 ('Dasara', 'Telugu', '2D', 'UA', 158),
@@ -89,14 +90,14 @@ INSERT INTO Show (theatre_id, movie_id, show_date, show_time, price, available_s
 (1, 3, '2023-04-25', '13:15:00', 300.00, 118),
 (1, 4, '2023-04-25', '13:20:00', 300.00, 195);
 
-
+/*
 ## P2 – Query Solution
 
 ### Problem
 List all shows on a given date at a given theatre with show timings.
 
 ### Query
-
+*/
 -- P2 Solution: Shows on 25th April 2023 at PVR: Nexus
 SELECT 
     M.title,
@@ -114,7 +115,7 @@ WHERE S.show_date = '2023-04-25'
   AND T.name = 'PVR: Nexus'
 ORDER BY S.show_time;
 
-
+/*
 ### Expected Output
 | title                     | language | format | theatre_name | show_date  | show_time | ticket_price | available_seats |
 |---------------------------|----------|--------|--------------|------------|-----------|--------------|-----------------|
@@ -126,4 +127,4 @@ ORDER BY S.show_time;
 | Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 06:20 PM  | ₹300         | 125             |
 | Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 07:20 PM  | ₹300         | 138             |
 | Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 10:30 PM  | ₹300         | 150             |
-
+*/
