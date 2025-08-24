@@ -1,37 +1,42 @@
--- # 🎬 Movie Booking Database Design (Simple Solution)
+# 🎬 Movie Booking Database Design (Simple Solution)
 
--- ## P1 – Tables and Structure
+## P1 – Tables and Structure
 
--- ### Table 1: Movie
--- | movie_id | title | language | format | rating | duration |
--- |----------|---------------------------|----------|--------|--------|----------|
--- | 1 | Dasara | Telugu | 2D | UA | 158 |
--- | 2 | Kisi Ka Bhai Kisi Ki Jaan | Hindi | 2D | UA | 145 |
--- | 3 | Tu Jhoothi Main Makkar | Hindi | 2D | UA | 164 |
--- | 4 | Avatar: The Way of Water | English | 3D | UA | 192 |
+### Table 1: Movie
 
--- ### Table 2: Theatre
--- | theatre_id | name | location | city |
--- |------------|------------|-------------|-----------|
--- | 1 | PVR: Nexus | Forum Mall | Bangalore |
+| movie_id | title                     | language | format | rating | duration |
+| -------- | ------------------------- | -------- | ------ | ------ | -------- |
+| 1        | Dasara                    | Telugu   | 2D     | UA     | 158      |
+| 2        | Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | UA     | 145      |
+| 3        | Tu Jhoothi Main Makkar    | Hindi    | 2D     | UA     | 164      |
+| 4        | Avatar: The Way of Water  | English  | 3D     | UA     | 192      |
 
--- ### Table 3: Show
--- | show_id | theatre_id | movie_id | show_date | show_time | price | available_seats |
--- |---------|------------|----------|-------------|-----------|-------|-----------------|
--- | 1 | 1 | 1 | 2023-04-25 | 12:15:00 | 300 | 145 |
--- | 2 | 1 | 2 | 2023-04-25 | 13:00:00 | 300 | 150 |
--- | 3 | 1 | 2 | 2023-04-25 | 16:10:00 | 300 | 142 |
--- | 4 | 1 | 2 | 2023-04-25 | 18:20:00 | 300 | 125 |
--- | 5 | 1 | 2 | 2023-04-25 | 19:20:00 | 300 | 138 |
--- | 6 | 1 | 2 | 2023-04-25 | 22:30:00 | 300 | 150 |
--- | 7 | 1 | 3 | 2023-04-25 | 13:15:00 | 300 | 118 |
--- | 8 | 1 | 4 | 2023-04-25 | 13:20:00 | 300 | 195 |
+### Table 2: Theatre
+
+| theatre_id | name       | location   | city      |
+| ---------- | ---------- | ---------- | --------- |
+| 1          | PVR: Nexus | Forum Mall | Bangalore |
+
+### Table 3: Show
+
+| show_id | theatre_id | movie_id | show_date  | show_time | price | available_seats |
+| ------- | ---------- | -------- | ---------- | --------- | ----- | --------------- |
+| 1       | 1          | 1        | 2023-04-25 | 12:15:00  | 300   | 145             |
+| 2       | 1          | 2        | 2023-04-25 | 13:00:00  | 300   | 150             |
+| 3       | 1          | 2        | 2023-04-25 | 16:10:00  | 300   | 142             |
+| 4       | 1          | 2        | 2023-04-25 | 18:20:00  | 300   | 125             |
+| 5       | 1          | 2        | 2023-04-25 | 19:20:00  | 300   | 138             |
+| 6       | 1          | 2        | 2023-04-25 | 22:30:00  | 300   | 150             |
+| 7       | 1          | 3        | 2023-04-25 | 13:15:00  | 300   | 118             |
+| 8       | 1          | 4        | 2023-04-25 | 13:20:00  | 300   | 195             |
 
 ---
 
--- ## SQL Commands
+## SQL Commands
 
--- ### Create Tables
+### Create Tables
+
+-- Create Movie Table
 CREATE TABLE Movie (
 movie_id INT PRIMARY KEY AUTO_INCREMENT,
 title VARCHAR(150) NOT NULL,
@@ -41,6 +46,7 @@ rating VARCHAR(10),
 duration INT
 );
 
+-- Create Theatre Table  
 CREATE TABLE Theatre (
 theatre_id INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(100) NOT NULL,
@@ -48,6 +54,7 @@ location VARCHAR(100) NOT NULL,
 city VARCHAR(50) NOT NULL
 );
 
+-- Create Show Table
 CREATE TABLE Show (
 show_id INT PRIMARY KEY AUTO_INCREMENT,
 theatre_id INT NOT NULL,
@@ -60,16 +67,20 @@ FOREIGN KEY (theatre_id) REFERENCES Theatre(theatre_id),
 FOREIGN KEY (movie_id) REFERENCES Movie(movie_id)
 );
 
--- ### Insert Sample Data
+### Insert Sample Data
+
+-- Insert Movies
 INSERT INTO Movie (title, language, format, rating, duration) VALUES
 ('Dasara', 'Telugu', '2D', 'UA', 158),
 ('Kisi Ka Bhai Kisi Ki Jaan', 'Hindi', '2D', 'UA', 145),
 ('Tu Jhoothi Main Makkar', 'Hindi', '2D', 'UA', 164),
 ('Avatar: The Way of Water', 'English', '3D', 'UA', 192);
 
+-- Insert Theatre
 INSERT INTO Theatre (name, location, city) VALUES
 ('PVR: Nexus', 'Forum Mall', 'Bangalore');
 
+-- Insert Shows (all with same price of ₹300)
 INSERT INTO Show (theatre_id, movie_id, show_date, show_time, price, available_seats) VALUES
 (1, 1, '2023-04-25', '12:15:00', 300.00, 145),
 (1, 2, '2023-04-25', '13:00:00', 300.00, 150),
@@ -80,12 +91,15 @@ INSERT INTO Show (theatre_id, movie_id, show_date, show_time, price, available_s
 (1, 3, '2023-04-25', '13:15:00', 300.00, 118),
 (1, 4, '2023-04-25', '13:20:00', 300.00, 195);
 
--- ## P2 – Query Solution
+## P2 – Query Solution
 
--- ### Problem
--- List all shows on a given date at a given theatre with show timings.
+### Problem
 
--- ### Query
+List all shows on a given date at a given theatre with show timings.
+
+### Query
+
+-- P2 Solution:
 SELECT
 M.title,
 M.language,
@@ -102,14 +116,15 @@ WHERE S.show_date = '2023-04-25'
 AND T.name = 'PVR: Nexus'
 ORDER BY S.show_time;
 
--- ### Expected Output
--- | title | language | format | theatre_name | show_date | show_time | ticket_price | available_seats |
--- |---------------------------|----------|--------|--------------|------------|-----------|--------------|-----------------|
--- | Dasara | Telugu | 2D | PVR: Nexus | 2023-04-25 | 12:15 PM | ₹300 | 145 |
--- | Kisi Ka Bhai Kisi Ki Jaan | Hindi | 2D | PVR: Nexus | 2023-04-25 | 01:00 PM | ₹300 | 150 |
--- | Tu Jhoothi Main Makkar | Hindi | 2D | PVR: Nexus | 2023-04-25 | 01:15 PM | ₹300 | 118 |
--- | Avatar: The Way of Water | English | 3D | PVR: Nexus | 2023-04-25 | 01:20 PM | ₹300 | 195 |
--- | Kisi Ka Bhai Kisi Ki Jaan | Hindi | 2D | PVR: Nexus | 2023-04-25 | 04:10 PM | ₹300 | 142 |
--- | Kisi Ka Bhai Kisi Ki Jaan | Hindi | 2D | PVR: Nexus | 2023-04-25 | 06:20 PM | ₹300 | 125 |
--- | Kisi Ka Bhai Kisi Ki Jaan | Hindi | 2D | PVR: Nexus | 2023-04-25 | 07:20 PM | ₹300 | 138 |
--- | Kisi Ka Bhai Kisi Ki Jaan | Hindi | 2D | PVR: Nexus | 2023-04-25 | 10:30 PM | ₹300 | 150 |
+### Expected Output
+
+| title                     | language | format | theatre_name | show_date  | show_time | ticket_price | available_seats |
+| ------------------------- | -------- | ------ | ------------ | ---------- | --------- | ------------ | --------------- |
+| Dasara                    | Telugu   | 2D     | PVR: Nexus   | 2023-04-25 | 12:15 PM  | ₹300         | 145             |
+| Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 01:00 PM  | ₹300         | 150             |
+| Tu Jhoothi Main Makkar    | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 01:15 PM  | ₹300         | 118             |
+| Avatar: The Way of Water  | English  | 3D     | PVR: Nexus   | 2023-04-25 | 01:20 PM  | ₹300         | 195             |
+| Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 04:10 PM  | ₹300         | 142             |
+| Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 06:20 PM  | ₹300         | 125             |
+| Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 07:20 PM  | ₹300         | 138             |
+| Kisi Ka Bhai Kisi Ki Jaan | Hindi    | 2D     | PVR: Nexus   | 2023-04-25 | 10:30 PM  | ₹300         | 150             |
